@@ -1,216 +1,242 @@
-/* Importando as cores da sua paleta */
 :root {
-    --roxo: #242149;
-    --azul-escuro: #1A3666;
-    --azul-claro: #0E77CC;
-    --verde-escuro: #17A460;
-    --verde-claro: #33DB89;
-    --branco: #ffffff;
-    --fundo-chat: #f7f9fc;
+    /* --- LIGHT MODE (Padrão) --- */
+    --bg-app: #f0f2f5;           /* Fundo da página */
+    --bg-chat: #ffffff;          /* Fundo do Chat */
+    --header-bg: #0A2342;        /* AZUL MARINHO UNIFECAF */
+    
+    --text-primary: #1f1f1f;     /* Texto principal escuro */
+    --text-secondary: #5e5e5e;
+    
+    --accent-color: #0A2342;     /* Cor de destaque (Azul UniFECAF) */
+    
+    --bot-bubble-bg: #f1f1f1;    /* Bolha do bot (cinza claro) */
+    --bot-text: #1f1f1f;
+
+    --user-bubble-bg: #0A2342;   /* Bolha do usuário (Azul) */
+    --user-bubble-text: #ffffff;
+
+    --shadow: 0 4px 20px rgba(0,0,0,0.1);
+    --input-bg: #f0f2f5;
+    --border-color: #e5e5e5;
 }
 
-/* 1. Configuração Full Screen (SEM MUDANÇAS) */
-html, body {
-    height: 100%;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    font-family: 'Nunito', sans-serif;
+/* --- DARK MODE (Alto Contraste) --- */
+body.dark-mode {
+    --bg-app: #050505;           /* Fundo quase preto (profundidade) */
+    --bg-chat: #1a1a1a;          /* Chat cinza escuro (destaque do fundo) */
+    --header-bg: #0A2342;        /* Header continua Azul */
+
+    --text-primary: #ffffff;     /* Texto branco puro */
+    --text-secondary: #b0b3b8;   /* Texto secundário cinza claro */
+    
+    --accent-color: #4da3ff;     /* Azul mais claro para detalhes no escuro */
+    
+    --bot-bubble-bg: #2d2d2d;    /* Bolha do bot mais clara que o fundo */
+    --bot-text: #e4e6eb;
+
+    --user-bubble-bg: #0A2342;   /* Mantém identidade azul */
+    --user-bubble-text: #ffffff;
+
+    --shadow: 0 4px 20px rgba(0,0,0,0.5);
+    --input-bg: #2d2d2d;
+    --border-color: #3e3e3e;
 }
 
-/* 2. Janela do Chat Full Screen (SEM MUDANÇAS) */
-.chat-window-fullscreen {
-    width: 100vw;
-    height: 100vh;
-    background: var(--branco);
-    display: flex;
+/* Reset Básico */
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+
+body { 
+    background-color: var(--bg-app); 
+    color: var(--text-primary); 
+    transition: all 0.3s ease; 
+    height: 100vh; 
+    display: flex; 
     flex-direction: column;
     overflow: hidden;
 }
 
-/* 3. Cabeçalho Refinado (SEM MUDANÇAS) */
-.chat-header {
-    background-color: var(--azul-escuro);
-    padding: 20px 30px;
+/* ================= HEADER ================= */
+.main-header {
+    background-color: var(--header-bg);
+    height: 70px; /* Altura fixa */
+    width: 100%;
     display: flex;
-    justify-content: center; 
+    justify-content: center;
     align-items: center;
-    color: var(--branco);
-    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-    flex-shrink: 0;
-    z-index: 10;
-}
-.header-logo {
-    height: 40px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    z-index: 100;
+    flex-shrink: 0; /* Não deixa o header encolher */
 }
 
-/* 4. Mensagens com Avatares - CORREÇÃO AQUI */
+.header-logo {
+    max-height: 40px; /* Tamanho do logo */
+    width: auto;
+    /* Truque para deixar o logo BRANCO se ele for preto originalmente */
+    filter: brightness(0) invert(1); 
+    transition: filter 0.3s;
+}
+
+/* ================= LAYOUT PRINCIPAL ================= */
+.main-wrapper {
+    flex: 1; /* Ocupa todo o espaço restante abaixo do header */
+    display: flex;
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+    gap: 20px;
+    height: calc(100vh - 70px); /* Altura total menos o header */
+}
+
+/* Área do Mascote */
+.mascot-area {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.mascot-container {
+    width: 320px;
+    max-width: 100%;
+}
+
+#feroz-character {
+    width: 100%;
+    height: auto;
+    display: block;
+    /* Sombra suave no mascote */
+    filter: drop-shadow(0 10px 15px rgba(0,0,0,0.2)); 
+}
+
+/* Área do Chat */
+.chat-container {
+    flex: 1.5;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.chat-window {
+    background-color: var(--bg-chat);
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border: 1px solid var(--border-color); /* Borda sutil para definição */
+}
+
 .chat-messages {
     flex-grow: 1;
-    padding: 24px;
+    padding: 25px;
     overflow-y: auto;
-    background-color: var(--fundo-chat);
     display: flex;
     flex-direction: column;
-    gap: 12px;
-}
-.message {
-    display: flex;
-    align-items: flex-end; /* Alinha a bolha e o avatar pela base */
-    /* Removi o 'gap' daqui para controlar com margem e ter mais flexibilidade */
+    gap: 15px;
 }
 
-/* Estilo do Avatar (SEM MUDANÇAS) */
-.avatar {
+/* ================= MENSAGENS ================= */
+.message { display: flex; width: 100%; }
+.message.user { justify-content: flex-end; }
+.message.bot { justify-content: flex-start; }
+
+.bubble {
+    max-width: 80%;
+    padding: 12px 18px;
+    border-radius: 18px;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    position: relative;
+}
+
+/* Estilo Bot */
+.message.bot .bubble {
+    background-color: var(--bot-bubble-bg);
+    color: var(--bot-text);
+    border-bottom-left-radius: 4px;
+}
+
+/* Estilo User */
+.message.user .bubble {
+    background-color: var(--user-bubble-bg);
+    color: var(--user-bubble-text);
+    border-bottom-right-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* Markdown Styles */
+.bubble strong { color: var(--accent-color); font-weight: 700; }
+.dark-mode .bubble strong { color: #82cfff; } /* Azul claro no dark mode */
+
+/* ================= INPUT AREA ================= */
+.chat-input-area {
+    padding: 20px;
+    background-color: var(--bg-chat);
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    gap: 10px;
+}
+
+#chat-input {
+    flex-grow: 1;
+    padding: 15px;
+    border-radius: 25px;
+    border: 1px solid var(--border-color);
+    background-color: var(--input-bg);
+    color: var(--text-primary);
+    outline: none;
+    transition: 0.3s;
+}
+
+#chat-input:focus {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 2px rgba(10, 35, 66, 0.1);
+}
+
+button[type="submit"] {
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    padding: 0 30px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.2s;
+}
+
+button[type="submit"]:hover { opacity: 0.9; }
+
+/* ================= BOTÃO THEME ================= */
+.theme-btn {
+    position: fixed;
+    top: 85px; /* Abaixo do header */
+    right: 20px;
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    overflow: hidden;
-    flex-shrink: 0;
-    background-color: var(--branco);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.08);
-}
-.avatar img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-/* Posição do Avatar do Bot */
-.message.bot {
-    justify-content: flex-start; /* Alinha tudo à esquerda */
-}
-.message.bot .avatar {
-    margin-right: 10px; /* Espaçamento entre avatar e bolha do bot */
-}
-.message.bot .bubble {
-    background-color: var(--branco);
-    color: var(--roxo);
-    border-bottom-left-radius: 6px;
-}
-
-/* ponta (tail) da bolha do bot - aponta para a esquerda (avatar) */
-.message.bot .bubble::after {
-    content: '';
-    position: absolute;
-    left: -8px;
-    bottom: 12px;
-    width: 0;
-    height: 0;
-    border-top: 8px solid transparent;
-    border-bottom: 8px solid transparent;
-    border-right: 8px solid var(--branco);
-}
-
-/* Posição do Avatar do Usuário */
-.message.user {
-    justify-content: flex-end; /* Alinha tudo à direita */
-    /* Removi 'flex-direction: row-reverse;' para simplificar a lógica */
-}
-.message.user .avatar {
-    order: 2; /* Garante que o avatar do usuário fique à direita da bolha */
-    margin-left: 10px; /* Espaçamento entre bolha e avatar do usuário */
-}
-.message.user .bubble {
-    order: 1; /* Garante que a bolha do usuário fique à esquerda do avatar */
-    background-color: var(--verde-claro);
-    color: var(--roxo);
-    font-weight: 600;
-    border-bottom-right-radius: 6px;
-}
-
-/* ponta (tail) da bolha do usuário - aponta para a direita (avatar) */
-.message.user .bubble::after {
-    content: '';
-    position: absolute;
-    right: -8px;
-    bottom: 12px;
-    width: 0;
-    height: 0;
-    border-top: 8px solid transparent;
-    border-bottom: 8px solid transparent;
-    border-left: 8px solid var(--verde-claro);
-}
-
-/* Estilo da Bolha (SEM MUDANÇAS) */
-.message .bubble {
-    padding: 14px 20px;
-    border-radius: 22px;
-    max-width: 75%;
-    line-height: 1.6;
-    font-size: 16px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-    position: relative; /* necessário para as pontas (tails) das bolhas */
-}
-
-/* Indicador "Digitando..." (SEM MUDANÇAS) */
-.message.typing .bubble {
-    background-color: var(--branco);
-    color: #888;
-    font-style: italic;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-}
-.message.typing .bubble::after {
-    content: '...';
-    display: inline-block;
-    animation: typing-dots 1s infinite;
-}
-@keyframes typing-dots {
-    0% { opacity: .2; }
-    20% { opacity: 1; }
-    100% { opacity: .2; }
-}
-
-/* 5. Input de Texto Refinado (SEM MUDANÇAS) */
-.chat-input-form {
-    display: flex;
-    align-items: center;
-    padding: 20px 30px;
-    border-top: 1px solid #e0e0e0;
-    background: var(--branco);
-    flex-shrink: 0;
-}
-#chat-input {
-    flex-grow: 1;
-    border: 1px solid #ddd;
-    border-radius: 25px;
-    padding: 15px 20px;
-    font-size: 16px;
-    margin-right: 15px;
-    font-family: 'Nunito', sans-serif;
-    transition: all 0.2s;
-}
-#chat-input:focus {
-    outline: none;
-    border-color: var(--azul-claro);
-    box-shadow: 0 0 0 3px rgba(14, 119, 204, 0.2);
-}
-.chat-input-form button {
-    background-color: var(--azul-escuro);
     border: none;
-    color: var(--branco);
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
+    background-color: var(--bg-chat);
+    color: var(--text-primary);
+    box-shadow: var(--shadow);
     cursor: pointer;
-    transition: background-color 0.2s;
     display: flex;
-    justify-content: center;
     align-items: center;
-    padding: 0;
-    margin: 0;
-    flex-shrink: 0;
+    justify-content: center;
+    z-index: 90;
+    border: 1px solid var(--border-color);
 }
-.chat-input-form button:hover {
-    background-color: var(--verde-escuro);
-}
-.chat-input-form button svg {
-    width: 24px;
-    height: 24px;
-    fill: var(--branco);
-    margin-left: 2px;
+
+/* ================= MOBILE ================= */
+@media (max-width: 768px) {
+    .main-wrapper { 
+        flex-direction: column; 
+        padding: 10px;
+        height: auto; /* Deixa rolar no mobile */
+    }
+    .mascot-area { height: 160px; margin-bottom: 10px; }
+    .mascot-container { width: 140px; }
+    .theme-btn { top: 80px; right: 10px; }
+    .chat-window { height: 60vh; }
 }

@@ -1,41 +1,46 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Assistente UniFECAF</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
-    
-    <link rel="stylesheet" href="style.css">
-    <link rel="icon" type="image/x-icon" href="src/idjNWwNFDQ_logos.png">
+    <title>Chat UniFECAF - Feroz</title>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel = "icon" href="src/idjNWwNFDQ_logos.jpeg">
 </head>
 <body>
 
-    <div class="chat-window-fullscreen" id="chat-window-fullscreen">
-        <div class="chat-header">
-            <img src="src/image 28.png" alt="UniFECAF Logo" class="header-logo">
+   <header class="main-header">
+        <div class="header-content">
+            <img src="src/image 28.png" alt="Logo UniFECAF" class="header-logo">
         </div>
-        
-        <div class="chat-messages" id="chat-messages">
-            <div class="message bot">
-                <div class="avatar">
-                    <img src="src/idjNWwNFDQ_logos.jpeg" alt="Bot Avatar">
-                </div>
-                <div class="bubble">Olá! Sou o assistente do Leonardo. Como posso ajudar a explicar o que ele faz?</div>
+    </header>
+
+    <button id="theme-toggle" class="theme-btn">
+        <span class="material-icons">dark_mode</span>
+    </button>
+
+    <div class="main-wrapper">
+        <div class="mascot-area">
+            <div class="mascot-container">
+                 <img id="feroz-character" src="src/ezgif-84361006d5034cf5.webp" alt="Mascote Feroz">
             </div>
         </div>
-        
-        <form class="chat-input-form" id="chat-form">
-            <input type="text" id="chat-input" placeholder="Digite sua pergunta..." autocomplete="off">
-            <button type="submit" aria-label="Enviar Mensagem">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-                    <path fill="currentColor" d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2 .01 7z"/>
-                </svg>
-            </button>
-        </form>
+
+        <div class="chat-container">
+            <div id="chat-window-fullscreen" class="chat-window">
+                <div id="chat-messages" class="chat-messages">
+                    <div class="message bot">
+                        <div class="bubble">Olá! Sou o Feroz, assistente virtual da UniFECAF. Em que posso ajudar hoje?</div>
+                    </div>
+                </div>
+                <form id="chat-form" class="chat-input-area">
+                    <input type="text" id="chat-input" placeholder="Digite sua mensagem..." autocomplete="off" required>
+                    <button type="submit">Enviar</button>
+                </form>
+            </div>
+        </div>
     </div>
 
     <script src="script.js"></script>
